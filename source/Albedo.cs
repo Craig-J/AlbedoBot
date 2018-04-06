@@ -78,7 +78,7 @@
         {
             // Repeat this for all the service classes
             // and other dependencies that your commands might need.
-            //_map.AddSingleton(new SomeServiceClass());
+            _map.AddSingleton(_client);
 
             // When all your required services are in the collection, build the container.
             // Tip: There's an overload taking in a 'validateScopes' bool to make sure
