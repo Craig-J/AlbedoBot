@@ -11,4 +11,4 @@ Bot command functionality is split into modules:
 * BDO Module - [Black Desert Online](https://www.blackdesertonline.com/) game specific commands. Planned in the future.
 
 # Contributing
-Pull requests and feature requests (create an issue) are welcome. If you have any questions join the discord server.
+Pull requests and feature requests (create an issue) are welcome. If you have any questions join the discord server, [Great Tomb of Nazarick](https://discord.gg/Uf9ZME7).
