@@ -3,17 +3,19 @@
     using Discord;
     using Discord.Commands;
     using Discord.WebSocket;
+    using Microsoft.Extensions.DependencyInjection;
+    using OsuSharp;
     using System;
     using System.IO;
     using System.Reflection;
     using System.Threading.Tasks;
-    using Microsoft.Extensions.DependencyInjection;
 
     public class Albedo
     {
         static Albedo()
         {
             _token = File.ReadAllText("data/BotToken.txt");
+            _osuApiKey = File.ReadAllText("data/OsuApiKey.txt");
         }
 
         private static void Main(string[] args) => new Albedo().MainAsync().GetAwaiter().GetResult();
@@ -22,7 +24,9 @@
         private readonly CommandService _commands = new CommandService();
         private IServiceProvider _services;
         private DiscordSocketClient _client;
+       // private SampleWindow _window;
         private static string _token;
+        private static string _osuApiKey;
 
         private async Task MainAsync()
         {
@@ -30,7 +34,8 @@
             {
                 MessageCacheSize = 300
             };
-            _client = new DiscordSocketClient();
+            _client = new DiscordSocketClient(config);
+            //_window = new SampleWindow();
 
             _client.Log += Log;
 
@@ -41,11 +46,11 @@
                 Console.WriteLine("Bot is ready.");
                 return Task.CompletedTask;
             };
-
+            
             await _client.LoginAsync(TokenType.Bot, _token);
             await _client.StartAsync();
-
             await Task.Delay(-1);
+            //_window.RunWindowLoop();
         }
 
         private static Task Log(LogMessage message)
@@ -79,6 +84,7 @@
             // Repeat this for all the service classes
             // and other dependencies that your commands might need.
             _map.AddSingleton(_client);
+            _map.AddSingleton(new OsuApi(_osuApiKey, "|"));
 
             // When all your required services are in the collection, build the container.
             // Tip: There's an overload taking in a 'validateScopes' bool to make sure

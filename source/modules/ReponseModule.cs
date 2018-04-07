@@ -14,6 +14,8 @@
         //[Command("respond"), Summary("Adds a string which Albedo will respond to with the specified response.")]
         //public async Task Response(string )
 
+        IList<string> _badWordList = new List<string>();
+
         public ResponseModule(DiscordSocketClient client)
         {
             client.MessageReceived += CheckMessageForBadWord;
@@ -53,7 +55,6 @@
             await Task.CompletedTask;
         }
 
-        IList<string> _badWordList = new List<string>();
 
         [RequireOwner(Group = "A"),
             RequireUserPermission(GuildPermission.Administrator, Group = "A")]
